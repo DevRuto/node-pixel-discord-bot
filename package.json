@@ -1,9 +1,23 @@
 {
   "name": "node-pixel-discord-bot",
+  "type": "module",
   "version": "1.0.0",
   "description": "A Discord Bot to announce Twitch streams and vods",
-  "main": "index.js",
+  "main": "./src/app.js",
   "repository": "https://github.com/devruto/node-pixel-discord-bot",
   "author": "Ruto",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/app.js"
+  },
+  "dependencies": {
+    "@twurple/api": "^5.0.5",
+    "@twurple/auth": "^5.0.5",
+    "@twurple/chat": "^5.0.5",
+    "@twurple/eventsub": "^5.0.5",
+    "@twurple/eventsub-ngrok": "^5.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
 }
