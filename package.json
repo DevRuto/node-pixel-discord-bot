@@ -1,0 +1,9 @@
+{
+  "name": "node-pixel-discord-bot",
+  "version": "1.0.0",
+  "description": "A Discord Bot to announce Twitch streams and vods",
+  "main": "index.js",
+  "repository": "https://github.com/devruto/node-pixel-discord-bot",
+  "author": "Ruto",
+  "license": "MIT"
+}
