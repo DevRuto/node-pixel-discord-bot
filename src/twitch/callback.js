@@ -10,7 +10,13 @@ async function streamOfflineCallback(event) {
   console.log(`${event.broadcasterDisplayName} has went offline`);
 }
 
+async function streamUpdateCallback(event) {
+  // https://twurple.js.org/reference/eventsub/classes/EventSubChannelUpdateEvent.html
+  console.log(`${event.broadcasterDisplayName} has updated the stream info`);
+}
+
 export {
   streamLiveCallback,
-  streamOfflineCallback
+  streamOfflineCallback,
+  streamUpdateCallback
 }

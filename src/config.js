@@ -1,6 +1,13 @@
-const config = {
+const twitch = {
   client_id: '',
   client_secret: ''
 }
 
-export default config;
+const discord = {
+
+}
+
+export {
+  twitch,
+  discord
+}
