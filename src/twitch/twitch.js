@@ -10,13 +10,13 @@ const apiClient = new ApiClient({ authProvider });
 let listener;
 
 async function start() {
-  console.log('start twitch listener');
+  console.log('[TWITCH] Start EventSub Listener');
 
   // const adapter = new DirectConnectionAdapter({
   // 	hostName: 'example.com',
   // });
   const adapter = new NgrokAdapter();
-  const secret = 'asdfasdfasdf';
+  const secret = twitch.secret;
   listener = new EventSubListener({ apiClient, adapter, secret });
   await listener.listen();
 }
