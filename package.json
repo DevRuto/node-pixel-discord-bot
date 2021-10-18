@@ -1,6 +1,5 @@
 {
   "name": "node-pixel-discord-bot",
-  "type": "module",
   "version": "1.0.0",
   "description": "A Discord Bot to announce Twitch streams and vods",
   "main": "./src/app.js",
@@ -8,14 +7,24 @@
   "author": "Ruto",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/app.js"
+    "lint": "eslint ./src",
+    "start": "node ./src/app.js",
+    "register": "node ./src/discord/deploy-commands.js",
+    "test": "node ./src/test.js"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
     "@twurple/api": "^5.0.5",
     "@twurple/auth": "^5.0.5",
     "@twurple/chat": "^5.0.5",
     "@twurple/eventsub": "^5.0.5",
-    "@twurple/eventsub-ngrok": "^5.0.5"
+    "@twurple/eventsub-ngrok": "^5.0.5",
+    "discord-api-types": "^0.23.1",
+    "discord.js": "^13.2.0",
+    "sequelize": "^6.7.0",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "eslint": "^8.0.0"

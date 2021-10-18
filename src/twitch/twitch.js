@@ -1,9 +1,9 @@
-import { ClientCredentialsAuthProvider } from '@twurple/auth';
-import { ApiClient } from '@twurple/api';
-import { EventSubListener } from '@twurple/eventsub';
-import { NgrokAdapter } from '@twurple/eventsub-ngrok';
-import { streamLiveCallback, streamOfflineCallback, streamUpdateCallback } from './callback.js'
-import { twitch } from '../config.js';
+const { ClientCredentialsAuthProvider } = require('@twurple/auth');
+const { ApiClient } = require('@twurple/api');
+const { EventSubListener } = require('@twurple/eventsub');
+const { NgrokAdapter } = require('@twurple/eventsub-ngrok');
+const { streamLiveCallback, streamOfflineCallback, streamUpdateCallback } = require('./callback');
+const { twitch } = require('../config');
 
 const authProvider = new ClientCredentialsAuthProvider(twitch.client_id, twitch.client_secret);
 const apiClient = new ApiClient({ authProvider });
@@ -45,7 +45,7 @@ async function subscribe(name) {
   return true;
 }
 
-export default {
+module.exports = {
   start,
   subscribe
-}
+};

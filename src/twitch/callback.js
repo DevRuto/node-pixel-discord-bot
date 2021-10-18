@@ -15,8 +15,8 @@ async function streamUpdateCallback(event) {
   console.log(`${event.broadcasterDisplayName} has updated the stream info`);
 }
 
-export {
+module.exports = {
   streamLiveCallback,
   streamOfflineCallback,
   streamUpdateCallback
-}
+};

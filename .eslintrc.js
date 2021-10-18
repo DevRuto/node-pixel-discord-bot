@@ -4,8 +4,12 @@ module.exports = {
     es6: true
   },
   extends: 'eslint:recommended',
-  parser: 'babel-eslint',
   parserOptions: {
-    "sourceType": "module"
+    ecmaVersion: 2021
+  },
+  rules: {
+    'prefer-const': 'error',
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
   }
 }
