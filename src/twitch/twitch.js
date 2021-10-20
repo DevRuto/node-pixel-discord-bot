@@ -1,6 +1,6 @@
 const { ClientCredentialsAuthProvider } = require('@twurple/auth');
 const { ApiClient } = require('@twurple/api');
-const { EventSubListener } = require('@twurple/eventsub');
+const { DirectConnectionAdapter, EventSubListener } = require('@twurple/eventsub');
 const { NgrokAdapter } = require('@twurple/eventsub-ngrok');
 const { streamLiveCallback, streamOfflineCallback, streamUpdateCallback } = require('./callback');
 const { twitch } = require('../config');
@@ -14,10 +14,9 @@ const subscriptionCache = {};
 async function start() {
   console.log('[TWITCH] Start EventSub Listener');
 
-  // const adapter = new DirectConnectionAdapter({
-  // 	hostName: 'example.com',
-  // });
-  const adapter = new NgrokAdapter();
+  const adapter = twitch.devMode ? new NgrokAdapter() : new DirectConnectionAdapter({
+    hostName: twitch.hostname,
+  });
   const secret = twitch.secret;
   listener = new EventSubListener({ apiClient, adapter, secret });
   await listener.listen();
