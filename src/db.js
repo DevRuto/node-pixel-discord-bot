@@ -22,7 +22,7 @@ const Guild = sequelize.define('guild', {
 
 const TwitchUser = sequelize.define('twitchUser', {
   id: {
-    type: DataTypes.INT,
+    type: DataTypes.INTEGER,
     primaryKey: true
   },
   name: {
@@ -35,6 +35,7 @@ TwitchUser.belongsToMany(Guild, { through: 'GuildSubscriptions' });
 
 (async () => {
   await sequelize.sync();
+  console.log('[DB] Tables synced');
 })();
 
 module.exports = {
