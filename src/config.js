@@ -1,4 +1,4 @@
-// const Sequelize = require('sequelize').Sequelize;
+const db = require('./db');
 
 const twitch = {
   client_id: '',
@@ -12,5 +12,6 @@ const discord = {
 
 module.exports = {
   twitch,
-  discord
+  discord,
+  db
 };
