@@ -30,7 +30,7 @@ const TwitchUser = sequelize.define('twitchUser', {
   },
 });
 
-Guild.belongsToMany(TwitchUser, { through: 'GuildSubscriptions' });
+Guild.belongsToMany(TwitchUser, { through: 'GuildSubscriptions', as: 'Subscription' });
 TwitchUser.belongsToMany(Guild, { through: 'GuildSubscriptions' });
 
 (async () => {

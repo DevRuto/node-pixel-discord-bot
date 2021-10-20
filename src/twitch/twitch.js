@@ -9,6 +9,8 @@ const authProvider = new ClientCredentialsAuthProvider(twitch.client_id, twitch.
 const apiClient = new ApiClient({ authProvider });
 let listener;
 
+const subscriptionCache = {};
+
 async function start() {
   console.log('[TWITCH] Start EventSub Listener');
 
@@ -36,9 +38,31 @@ async function subscribe(name) {
       return false;
     }
     console.log(`[TWITCH] Subscribing to ${name} (${userId})`);
-    await listener.subscribeToStreamOnlineEvents(userId, streamLiveCallback);
-    await listener.subscribeToStreamOfflineEvents(userId, streamOfflineCallback);
-    await listener.subscribeToChannelUpdateEvents(userId, streamUpdateCallback);
+
+    if (!subscriptionCache[userId]) {
+      subscriptionCache[userId] = [];
+    }
+    subscriptionCache[userId].push(await listener.subscribeToStreamOnlineEvents(userId, streamLiveCallback));
+    subscriptionCache[userId].push(await listener.subscribeToStreamOfflineEvents(userId, streamOfflineCallback));
+    subscriptionCache[userId].push(await listener.subscribeToChannelUpdateEvents(userId, streamUpdateCallback));
+  } catch {
+    return false;
+  }
+  return true;
+}
+
+async function unsubscribe(name) {
+  try {
+    const userId = await getUserId(name);
+    if (!userId || !subscriptionCache[userId]) {
+      return false;
+    }
+    console.log(`[TWITCH] Unsubscribing ${name} (${userId})`);
+
+    for (const sub in subscriptionCache[userId]) {
+      sub.stop();
+    }
+    delete subscriptionCache[userId];
   } catch {
     return false;
   }
@@ -47,5 +71,7 @@ async function subscribe(name) {
 
 module.exports = {
   start,
-  subscribe
+  subscribe,
+  unsubscribe,
+  getUserId
 };

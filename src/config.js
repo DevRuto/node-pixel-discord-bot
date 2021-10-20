@@ -1,5 +1,3 @@
-const db = require('./db');
-
 const twitch = {
   client_id: '',
   client_secret: '',
@@ -12,6 +10,5 @@ const discord = {
 
 module.exports = {
   twitch,
-  discord,
-  db
+  discord
 };
