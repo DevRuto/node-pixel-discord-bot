@@ -1,18 +1,25 @@
+const {
+  handleStreamLive,
+  handleStreamUpdate,
+  handleStreamOffline
+} = require('../discord/handlers');
 
 async function streamLiveCallback(event) {
   // https://twurple.js.org/reference/eventsub/classes/EventSubStreamOnlineEvent.html
-  const stream = await event.getStream();
-  console.log(`${event.broadcasterDisplayName} has went online [${stream.title}]`);
+  console.log(`[TWITCH] ${event.broadcasterDisplayName} has went online`);
+  handleStreamLive(event);
 }
 
 async function streamOfflineCallback(event) {
   // https://twurple.js.org/reference/eventsub/classes/EventSubStreamOfflineEvent.html
-  console.log(`${event.broadcasterDisplayName} has went offline`);
+  console.log(`[TWITCH] ${event.broadcasterDisplayName} has went offline`);
+  handleStreamOffline(event);
 }
 
 async function streamUpdateCallback(event) {
   // https://twurple.js.org/reference/eventsub/classes/EventSubChannelUpdateEvent.html
-  console.log(`${event.broadcasterDisplayName} has updated the stream info`);
+  console.log(`[TWITCH] ${event.broadcasterDisplayName} has updated the stream info`);
+  handleStreamUpdate(event);
 }
 
 module.exports = {
