@@ -22,7 +22,12 @@ async function handleStreamLive(e) {
     if (!channel) {
       continue;
     }
+    let ping = '';
+    if (guild.streamPing) {
+      ping += `<@${guild.streamPing}>`;
+    }
     const message = await channel.send({
+      content: ping,
       embeds: [await createLiveEmbed(e)]
     });
     await DiscordMessage.create({

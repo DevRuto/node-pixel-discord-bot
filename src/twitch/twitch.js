@@ -4,6 +4,7 @@ const { DirectConnectionAdapter, EventSubListener } = require('@twurple/eventsub
 const { NgrokAdapter } = require('@twurple/eventsub-ngrok');
 const { streamLiveCallback, streamOfflineCallback, streamUpdateCallback } = require('./callback');
 const { twitch } = require('../config');
+const { TwitchUser } = require('../db');
 
 const authProvider = new ClientCredentialsAuthProvider(twitch.client_id, twitch.client_secret);
 const apiClient = new ApiClient({ authProvider });
@@ -20,6 +21,11 @@ async function start() {
   const secret = twitch.secret;
   listener = new EventSubListener({ apiClient, adapter, secret });
   await listener.listen();
+
+  const users = await TwitchUser.findAll();
+  for (const user of users) {
+    await subscribe(user.name);
+  }
 }
 
 async function getUserId(name) {
