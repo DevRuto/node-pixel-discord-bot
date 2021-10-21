@@ -82,7 +82,7 @@ async function handleStreamOffline(e) {
     }
   }
 
-  await DiscordMessage.delete({
+  await DiscordMessage.destroy({
     where: {
       twitchId: e.broadcasterId
     }
