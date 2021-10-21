@@ -1,6 +1,7 @@
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection, Permissions } = require('discord.js');
 const fs = require('fs');
 const { discord } = require('../config');
+const { Guild } = require('../db');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -22,6 +23,29 @@ async function start() {
     if (!interaction.isCommand()) return;
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
+
+    const guild = (await Guild.findOrCreate({
+      where: { id: interaction.guildId },
+      defaults: {
+        id: interaction.guildId
+      }
+    }))[0];
+    const adminRole = guild.adminRole;
+    if (adminRole === null || adminRole === '') {
+      if (!interaction.memberPermissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+        await interaction.reply('You must be an administrator to use this command');
+        return;
+      }
+    } else {
+      if (!interaction.member.roles.cache.has(adminRole)) {
+        await interaction.reply({
+          content: `You must be a <@${adminRole}> to use this command`,
+          allowedMentions: { parse: [] },
+        });
+        return;
+      }
+    }
+    // interaction.memberPermissions.
 
     try {
       await command.execute(interaction);
