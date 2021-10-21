@@ -40,10 +40,10 @@ async function subscribe(name) {
 
     if (!subscriptionCache[userId]) {
       subscriptionCache[userId] = [];
+      subscriptionCache[userId].push(await listener.subscribeToStreamOnlineEvents(userId, streamLiveCallback));
+      subscriptionCache[userId].push(await listener.subscribeToStreamOfflineEvents(userId, streamOfflineCallback));
+      subscriptionCache[userId].push(await listener.subscribeToChannelUpdateEvents(userId, streamUpdateCallback));
     }
-    subscriptionCache[userId].push(await listener.subscribeToStreamOnlineEvents(userId, streamLiveCallback));
-    subscriptionCache[userId].push(await listener.subscribeToStreamOfflineEvents(userId, streamOfflineCallback));
-    subscriptionCache[userId].push(await listener.subscribeToChannelUpdateEvents(userId, streamUpdateCallback));
   } catch {
     return false;
   }
