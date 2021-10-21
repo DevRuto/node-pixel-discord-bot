@@ -1,5 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'data.sqlite'
+});
 
 const Guild = sequelize.define('guild', {
   id: {
@@ -57,7 +60,9 @@ Guild.belongsToMany(TwitchUser, { through: 'GuildSubscriptions', as: 'Subscripti
 TwitchUser.belongsToMany(Guild, { through: 'GuildSubscriptions' });
 
 async function setup() {
-  await sequelize.sync();
+  await sequelize.sync({
+    // alter: true // Careful
+  });
   console.log('[DB] Tables synced');
 }
 
