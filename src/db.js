@@ -14,10 +14,18 @@ const Guild = sequelize.define('guild', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  streamPing: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   vodChannel: {
     type: DataTypes.STRING,
     allowNull: true
   },
+  vodPing: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
 });
 
 const TwitchUser = sequelize.define('twitchUser', {

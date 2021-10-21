@@ -8,8 +8,8 @@ const { discord } = require('../config');
 const commands = [];
 const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'));
 
-const clientId = '';
-const guildId = '';
+const clientId = discord.client_id;
+const guildId = discord.guild_id;
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);

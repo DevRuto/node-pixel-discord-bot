@@ -7,7 +7,10 @@ const twitch = {
 };
 
 const discord = {
-  token: ''
+  token: '',
+  client_id: '',
+  // Guild ID is for local testing in discord/deploy-commands.js
+  guild_id: '793736735711952909'
 };
 
 module.exports = {
