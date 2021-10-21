@@ -12,13 +12,17 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const guild = await Guild.findOrCreate({
+    const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {
         id: interaction.guildId
       }
-    });
-    guild.vodPing = interaction.option.getMentionable('role').value;
+    }))[0];
+    const mention = interaction.options.getMentionable('role');
+    guild.vodPing = mention.id;
+    if (mention.name === '@everyone') {
+      guild.vodPing = 'everyone';
+    }
     await guild.save();
     await interaction.reply({
       content: 'Saved VOD ping role',

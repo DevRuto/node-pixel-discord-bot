@@ -7,12 +7,12 @@ module.exports = {
     .setDescription('Removes role pinging for live streams'),
 
   async execute(interaction) {
-    const guild = await Guild.findOrCreate({
+    const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {
         id: interaction.guildId
       }
-    });
+    }))[0];
     guild.streamPing = null;
     await guild.save();
     await interaction.reply({

@@ -12,13 +12,13 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const guild = await Guild.findOrCreate({
+    const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {
         id: interaction.guildId
       }
-    });
-    guild.vodChannel = interaction.option.getMentionable('channel').value;
+    }))[0];
+    guild.vodChannel = interaction.options.getChannel('channel').id;
     await guild.save();
     await interaction.reply({
       content: 'Saved VOD channel',

@@ -7,12 +7,12 @@ module.exports = {
     .setDescription('Remove the channel for posting live streams'),
 
   async execute(interaction) {
-    const guild = await Guild.findOrCreate({
+    const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {
         id: interaction.guildId
       }
-    });
+    }))[0];
     guild.streamChannel = null;
     await guild.save();
     await interaction.reply({

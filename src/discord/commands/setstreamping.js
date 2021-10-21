@@ -12,13 +12,17 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const guild = await Guild.findOrCreate({
+    const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {
         id: interaction.guildId
       }
-    });
-    guild.streamPing = interaction.option.getMentionable('role').value;
+    }))[0];
+    const mention = interaction.options.getMentionable('role');
+    guild.streamPing = mention.id;
+    if (mention.name === '@everyone') {
+      guild.streamPing = 'everyone';
+    }
     await guild.save();
     await interaction.reply({
       content: 'Saved stream ping role',
