@@ -17,6 +17,8 @@ async function start() {
 
   const adapter = twitch.devMode ? new NgrokAdapter() : new ReverseProxyAdapter({
     hostName: twitch.hostname,
+    port: twitch.port,
+    pathPrefix: twitch.prefix,
   });
   const secret = twitch.secret;
   listener = new EventSubListener({ apiClient, adapter, secret });
