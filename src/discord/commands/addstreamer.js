@@ -12,7 +12,7 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const streamer = interaction.options.getString('streamer').toLowerCase();
+    const streamer = interaction.options.getString('streamer').toLowerCase().trim();
     const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {

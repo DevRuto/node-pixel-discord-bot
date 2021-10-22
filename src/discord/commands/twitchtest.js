@@ -16,19 +16,27 @@ module.exports = {
 
     let msg = 'Bot settings:\n';
     if (guild.adminRole) {
-      msg += `Admin Role: <@${guild.adminRole}>\n`;
+      msg += `Admin Role: <@&${guild.adminRole}>\n`;
     }
     if (guild.streamChannel) {
       msg += `Stream Channel: <#${guild.streamChannel}>\n`;
     }
     if (guild.streamPing) {
-      msg += `Stream Ping: <@${guild.streamPing}>\n`;
+      if (guild.streamPing === 'everyone') {
+        msg += 'Stream Ping: @everyone\n';
+      } else {
+        msg += `Stream Ping: <@&${guild.streamPing}>\n`;
+      }
     }
     if (guild.vodChannel) {
       msg += `VOD Channel: <#${guild.vodChannel}>\n`;
     }
     if (guild.vodPing) {
-      msg += `VOD Ping: <@${guild.vodPing}>\n`;
+      if (guild.vodPing === 'everyone') {
+        msg += 'VOD Ping: @everyone\n';
+      } else {
+        msg += `VOD Ping: <@&${guild.vodPing}>\n`;
+      }
     }
 
     interaction.reply({

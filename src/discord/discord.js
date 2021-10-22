@@ -31,21 +31,17 @@ async function start() {
       }
     }))[0];
     const adminRole = guild.adminRole;
-    if (adminRole === null || adminRole === '') {
-      if (!interaction.memberPermissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+    if (!(interaction.member.roles.cache.has(adminRole) || interaction.memberPermissions.has(Permissions.FLAGS.ADMINISTRATOR))) {
+      if (!adminRole) {
         await interaction.reply('You must be an administrator to use this command');
-        return;
-      }
-    } else {
-      if (!interaction.member.roles.cache.has(adminRole)) {
+      } else {
         await interaction.reply({
-          content: `You must be a <@${adminRole}> to use this command`,
+          content: `You must be a <@&${adminRole}> or server administrator to use this command`,
           allowedMentions: { parse: [] },
         });
-        return;
       }
+      return;
     }
-    // interaction.memberPermissions.
 
     try {
       await command.execute(interaction);

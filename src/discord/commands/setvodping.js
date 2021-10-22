@@ -5,7 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('setvodping')
     .setDescription('Set the role to ping for VOD when a streamer goes offline')
-    .addMentionableOption(option =>
+    .addRoleOption(option =>
       option
         .setName('role')
         .setDescription('The role to ping for VODs')
@@ -18,14 +18,14 @@ module.exports = {
         id: interaction.guildId
       }
     }))[0];
-    const mention = interaction.options.getMentionable('role');
-    guild.vodPing = mention.id;
-    if (mention.name === '@everyone') {
+    const role = interaction.options.getRole('role');
+    guild.vodPing = role.id;
+    if (role.name === '@everyone') {
       guild.vodPing = 'everyone';
     }
     await guild.save();
     await interaction.reply({
-      content: 'Saved VOD ping role',
+      content: `Saved VOD ping role ${role}`,
       ephemeral: false
     });
   }

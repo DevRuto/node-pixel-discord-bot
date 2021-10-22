@@ -5,7 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('setadmin')
     .setDescription('Set admin for the bot')
-    .addMentionableOption(option =>
+    .addRoleOption(option =>
       option
         .setName('role')
         .setDescription('Admin role')
@@ -18,11 +18,12 @@ module.exports = {
         id: interaction.guildId
       }
     }))[0];
-    const mention = interaction.options.getMentionable('role');
-    guild.adminRole = mention.id;
+    const role = interaction.options.getRole('role');
+    guild.adminRole = role.id;
     await guild.save();
     await interaction.reply({
-      content: 'Admin role set',
+      content: `Admin role set to ${role}`,
+      allowedMentions: { parse: [] },
       ephemeral: false
     });
   }

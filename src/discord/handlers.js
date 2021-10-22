@@ -24,7 +24,11 @@ async function handleStreamLive(e) {
     }
     let ping = '';
     if (guild.streamPing) {
-      ping += `<@${guild.streamPing}>`;
+      if (guild.streamPing === 'everyone') {
+        ping += '@everyone';
+      } else {
+        ping += `<@&${guild.streamPing}>`;
+      }
     }
     const message = await channel.send({
       content: ping,

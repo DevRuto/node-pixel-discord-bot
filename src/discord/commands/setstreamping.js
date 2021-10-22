@@ -5,7 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('setstreamping')
     .setDescription('Set the role to ping when a streamer goes live')
-    .addMentionableOption(option =>
+    .addRoleOption(option =>
       option
         .setName('role')
         .setDescription('The role to ping for live streams')
@@ -18,14 +18,15 @@ module.exports = {
         id: interaction.guildId
       }
     }))[0];
-    const mention = interaction.options.getMentionable('role');
-    guild.streamPing = mention.id;
-    if (mention.name === '@everyone') {
+    const role = interaction.options.getRole('role');
+    guild.streamPing = role.id;
+    if (role.name === '@everyone') {
       guild.streamPing = 'everyone';
     }
     await guild.save();
     await interaction.reply({
-      content: 'Saved stream ping role',
+      content: `Saved stream ping role as ${role}`,
+      allowedMentions: { parse: [] },
       ephemeral: false
     });
   }

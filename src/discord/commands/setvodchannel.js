@@ -18,10 +18,11 @@ module.exports = {
         id: interaction.guildId
       }
     }))[0];
-    guild.vodChannel = interaction.options.getChannel('channel').id;
+    const channel = interaction.options.getChannel('channel');
+    guild.vodChannel = channel.id;
     await guild.save();
     await interaction.reply({
-      content: 'Saved VOD channel',
+      content: `Saved VOD channel ${channel}`,
       ephemeral: false
     });
   }

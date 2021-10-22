@@ -18,10 +18,11 @@ module.exports = {
         id: interaction.guildId
       }
     }))[0];
-    guild.streamChannel = interaction.options.getChannel('channel').id;
+    const channel = interaction.options.getChannel('channel');
+    guild.streamChannel = channel.id;
     await guild.save();
     await interaction.reply({
-      content: 'Saved stream channel',
+      content: `Saved stream channel to ${channel}`,
       ephemeral: false
     });
   }

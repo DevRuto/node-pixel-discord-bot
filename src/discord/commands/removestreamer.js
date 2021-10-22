@@ -12,18 +12,25 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const streamer = interaction.options.getString('streamer').toLowerCase();
+    const streamer = interaction.options.getString('streamer').toLowerCase().trim();
     const guild = (await Guild.findOrCreate({
       where: { id: interaction.guildId },
       defaults: {
         id: interaction.guildId
       }
     }))[0];
-    const twitchUser = (await TwitchUser.findOrCreate({
+    const twitchUser = await TwitchUser.findOne({
       where: {
         name: streamer
       }
-    }))[0];
+    });
+    if (!twitchUser) {
+      await interaction.reply({
+        content: 'Cannot find streamer',
+        ephemeral: false
+      });
+      return;
+    }
     if (!await twitchUser.hasGuilds()) {
       await require('../../twitch/twitch').unsubscribe(streamer);
     }
