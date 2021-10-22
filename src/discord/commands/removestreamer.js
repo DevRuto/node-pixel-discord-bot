@@ -26,7 +26,7 @@ module.exports = {
     });
     if (!twitchUser) {
       await interaction.reply({
-        content: 'Cannot find streamer',
+        content: `Cannot find streamer '${streamer}' in the watch list`,
         ephemeral: false
       });
       return;
@@ -34,11 +34,17 @@ module.exports = {
     if (!await twitchUser.hasGuilds()) {
       await require('../../twitch/twitch').unsubscribe(streamer);
     }
-
-    await guild.removeSubscription(twitchUser);
-    await interaction.reply({
-      content: 'Removed streamer',
-      ephemeral: false
-    });
+    if (await guild.hasSubscription(twitchUser)) {
+      await guild.removeSubscription(twitchUser);
+      await interaction.reply({
+        content: `Removed streamer '${streamer}'`,
+        ephemeral: false
+      });
+    } else {
+      await interaction.reply({
+        content: `Streamer '${streamer}' was not in the watch list`,
+        ephemeral: false
+      });
+    }
   }
 };
