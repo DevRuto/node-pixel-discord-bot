@@ -1,6 +1,6 @@
 const { ClientCredentialsAuthProvider } = require('@twurple/auth');
 const { ApiClient } = require('@twurple/api');
-const { DirectConnectionAdapter, EventSubListener } = require('@twurple/eventsub');
+const { ReverseProxyAdapter, EventSubListener } = require('@twurple/eventsub');
 const { NgrokAdapter } = require('@twurple/eventsub-ngrok');
 const { streamLiveCallback, streamOfflineCallback, streamUpdateCallback } = require('./callback');
 const { twitch } = require('../config');
@@ -15,7 +15,7 @@ const subscriptionCache = {};
 async function start() {
   console.log('[TWITCH] Start EventSub Listener');
 
-  const adapter = twitch.devMode ? new NgrokAdapter() : new DirectConnectionAdapter({
+  const adapter = twitch.devMode ? new NgrokAdapter() : new ReverseProxyAdapter({
     hostName: twitch.hostname,
   });
   const secret = twitch.secret;
