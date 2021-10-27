@@ -10,7 +10,8 @@
     "lint": "eslint ./src",
     "start": "node ./src/app.js",
     "register": "node ./src/discord/deploy-commands.js",
-    "test": "node ./src/test.js"
+    "test": "node ./src/test.js",
+    "testtwitch": "node ./src/twitch/testServer.js"
   },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
