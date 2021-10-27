@@ -8,6 +8,7 @@ const authProvider = new ClientCredentialsAuthProvider(twitch.client_id, twitch.
 const apiClient = new ApiClient({ authProvider });
 let listener;
 
+let sub;
 async function start() {
   console.log('[TWITCH TEST] Start EventSub Listener');
 
@@ -31,6 +32,12 @@ async function getUserId(name) {
 
 async function followCallback(e) {
   console.log(`[TWITCH TEST] ${e.userName} has followed ${e.broadcasterDisplayName}`);
+  if (sub) {
+    await sub.stop();
+    console.log('[TWITCH TEST] Unsubscribed');
+    await listener.unlisten();
+    console.log('[TWITCH TEST] Stopping');
+  }
 }
 
 async function subscribe(name) {
@@ -39,10 +46,11 @@ async function subscribe(name) {
     if (!userId) {
       return false;
     }
-    console.log(`[TWITCH TEST] Subscribing to ${name} (${userId})`);
 
-    await listener.subscribeToChannelFollowEvents(userId, followCallback);
+    sub = await listener.subscribeToChannelFollowEvents(userId, followCallback);
+    console.log(`[TWITCH TEST] Subscription to ${name} (${userId}) - ${sub.verified}`);
   } catch {
+    console.log(`[TWITCH TEST] Subscription to ${name} failed`);
     return false;
   }
   return true;

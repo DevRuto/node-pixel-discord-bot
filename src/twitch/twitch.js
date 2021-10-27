@@ -44,7 +44,6 @@ async function subscribe(name) {
     if (!userId) {
       return false;
     }
-    console.log(`[TWITCH] Subscribing to ${name} (${userId})`);
 
     if (!subscriptionCache[userId]) {
       subscriptionCache[userId] = [];
@@ -52,7 +51,9 @@ async function subscribe(name) {
       subscriptionCache[userId].push(await listener.subscribeToStreamOfflineEvents(userId, streamOfflineCallback));
       subscriptionCache[userId].push(await listener.subscribeToChannelUpdateEvents(userId, streamUpdateCallback));
     }
+    console.log(`[TWITCH] Subscribing to ${name} (${userId}) - ${subscriptionCache[userId][0].verified}`);
   } catch {
+    console.log(`[TWITCH] Subscribing to ${name} failed)`);
     return false;
   }
   return true;
@@ -67,7 +68,7 @@ async function unsubscribe(name) {
     console.log(`[TWITCH] Unsubscribing ${name} (${userId})`);
 
     for (const sub in subscriptionCache[userId]) {
-      sub.stop();
+      await sub.stop();
     }
     delete subscriptionCache[userId];
   } catch {
