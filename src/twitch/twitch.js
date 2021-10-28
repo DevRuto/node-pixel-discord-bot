@@ -13,7 +13,9 @@ let listener;
 const subscriptionCache = {};
 
 async function start() {
-  console.log('[TWITCH] Start EventSub Listener');
+  console.log('[TWITCH] Deleting any existing subscription');
+  await apiClient.eventSub.deleteAllSubscriptions();
+  console.log('[TWITCH] Starting EventSub Listener');
 
   const adapter = twitch.devMode ? new NgrokAdapter() : new ReverseProxyAdapter({
     hostName: twitch.hostname,
