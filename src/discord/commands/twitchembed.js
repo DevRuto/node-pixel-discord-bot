@@ -9,7 +9,7 @@ const streamObj = {
   language: 'english',
   startDate: new Date(),
   tagIds: ['12','32'],
-  thumbnailUrl: 'http://asfasdfasdf',
+  thumbnailUrl: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_auronplay-{width}x{height}.jpg',
   title: 'a title',
   type: 'live',
   userDisplayName: 'Ruto',
