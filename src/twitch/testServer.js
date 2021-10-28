@@ -50,7 +50,7 @@ async function subscribe(name) {
     sub = await listener.subscribeToChannelFollowEvents(userId, followCallback);
     console.log(`[TWITCH TEST] Subscription to ${name} (${userId}) - ${sub.verified}`);
   } catch {
-    console.log(`[TWITCH TEST] Subscription to ${name} failed`);
+    console.log(`[TWITCH TEST] Subscription to ${name} - failed`);
     return false;
   }
   return true;

@@ -55,7 +55,7 @@ async function subscribe(name) {
     }
     console.log(`[TWITCH] Subscribing to ${name} (${userId}) - ${subscriptionCache[userId][0].verified}`);
   } catch {
-    console.log(`[TWITCH] Subscribing to ${name} failed)`);
+    console.log(`[TWITCH] Subscribing to ${name} - failed`);
     return false;
   }
   return true;
