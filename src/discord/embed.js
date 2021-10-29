@@ -18,6 +18,7 @@ async function createLiveEmbed(liveEvent) {
     .addField('Game', stream.gameName, true)
     .setURL(`https://twitch.tv/${liveEvent.broadcasterName}`)
     .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '480'))
+    .setColor()
     .setTimestamp();
 }
 
@@ -43,7 +44,7 @@ async function createUpdateEmbed(updateEvent) {
     .addField('Title', updateEvent.streamTitle, true)
     .addField('Game', stream.gameName, true)
     .setURL(`https://twitch.tv/${updateEvent.broadcasterName}`)
-    .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '480'))
+    .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '360'))
     .setTimestamp();
 }
 
