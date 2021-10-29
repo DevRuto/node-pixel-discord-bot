@@ -17,7 +17,7 @@ async function createLiveEmbed(liveEvent) {
     .addField('Title', stream.title, true)
     .addField('Game', stream.gameName, true)
     .setURL(`https://twitch.tv/${liveEvent.broadcasterName}`)
-    .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '480'))
+    .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '360'))
     .setColor()
     .setTimestamp();
 }
