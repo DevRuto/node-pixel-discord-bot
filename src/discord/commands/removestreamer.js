@@ -31,7 +31,7 @@ module.exports = {
       });
       return;
     }
-    if (await twitchUser.countBars() === 0) {
+    if (await twitchUser.countGuilds() === 0) {
       await require('../../twitch/twitch').unsubscribe(streamer);
     }
     if (await guild.hasSubscription(twitchUser)) {
