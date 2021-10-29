@@ -31,15 +31,15 @@ module.exports = {
       });
       return;
     }
-    if (await twitchUser.countGuilds() === 0) {
-      await require('../../twitch/twitch').unsubscribe(streamer);
-    }
     if (await guild.hasSubscription(twitchUser)) {
       await guild.removeSubscription(twitchUser);
       await interaction.reply({
         content: `Removed streamer '${streamer}'`,
         ephemeral: false
       });
+      if (await twitchUser.countGuilds() === 0) {
+        await require('../../twitch/twitch').unsubscribe(streamer);
+      }
     } else {
       await interaction.reply({
         content: `Streamer '${streamer}' was not in the watch list`,
