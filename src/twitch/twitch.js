@@ -69,7 +69,7 @@ async function unsubscribe(name) {
     }
     console.log(`[TWITCH] Unsubscribing ${name} (${userId})`);
 
-    for (const sub in subscriptionCache[userId]) {
+    for (const sub of subscriptionCache[userId]) {
       await sub.stop();
     }
     delete subscriptionCache[userId];
