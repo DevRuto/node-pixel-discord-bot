@@ -79,9 +79,22 @@ async function unsubscribe(name) {
   return true;
 }
 
+async function getLatestVod(userId) {
+  try {
+    const vods = await apiClient.videos.getVideosByUser(userId, {
+      limit: 1,
+      type: 'archive',
+    });
+    return vods.data[0];
+  } catch {
+    return false;
+  }
+}
+
 module.exports = {
   start,
   subscribe,
   unsubscribe,
-  getUserId
+  getUserId,
+  getLatestVod
 };

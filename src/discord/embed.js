@@ -1,5 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
+const dateOptions =  { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 // https://twurple.js.org/reference/eventsub/classes/EventSubStreamOnlineEvent.html
 /**
   broadcasterDisplayName
@@ -48,7 +50,40 @@ async function createUpdateEmbed(updateEvent) {
     .setTimestamp();
 }
 
+// https://twurple.js.org/reference/api/classes/HelixVideo.html
+/**
+  creationDate
+  description
+  duration
+  durationInSeconds
+  id
+  isPublic
+  language
+  mutedSegmentData
+  publishDate
+  streamId
+  thumbnailUrl
+  title
+  type
+  url
+  userDisplayName
+  userId
+  userName
+  views
+  -> getUser()
+ */
+async function createVodEmbed(vod) {
+  return new MessageEmbed()
+    .setTitle(vod.userDisplayName)
+    .addField('Title', vod.title, false)
+    .addField('Date', vod.creationDate.toLocaleDateString('en-US', dateOptions), true)
+    .addField('Duration', vod.duration, true)
+    .setURL(vod.url)
+    .setImage(vod.thumbnailUrl.replace('{width}', '640').replace('{height}', '360'));
+}
+
 module.exports = {
   createLiveEmbed,
-  createUpdateEmbed
+  createUpdateEmbed,
+  createVodEmbed
 };

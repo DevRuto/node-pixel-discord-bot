@@ -1,6 +1,6 @@
 const { client } = require('./discord');
 const { DiscordMessage, TwitchUser } = require('../db');
-const { createLiveEmbed, createUpdateEmbed } = require('./embed');
+const { createLiveEmbed, createUpdateEmbed, createVodEmbed } = require('./embed');
 
 // https://twurple.js.org/reference/eventsub/classes/EventSubStreamOnlineEvent.html
 async function handleStreamLive(e) {
@@ -77,7 +77,7 @@ async function handleStreamUpdate(e) {
   broadcasterName
   -> getBroadcaster()
  */
-async function handleStreamOffline(e) {
+async function handleStreamOffline(e, vod) {
   if (!client || !client.isReady()) {
     return;
   }
@@ -101,6 +101,39 @@ async function handleStreamOffline(e) {
       twitchId: e.broadcasterId
     }
   });
+
+  // Send VOD if enabled
+  if (!vod || !vod.isPublic) {
+    return;
+  }
+
+  const twitchUser = await TwitchUser.findByPk(e.broadcasterId);
+  if (!twitchUser) {
+    return;
+  }
+
+  const guilds = await twitchUser.getGuilds();
+  for (const guild of guilds) {
+    if (!guild || !guild.vodChannel) {
+      continue;
+    }
+    const channel = await client.channels.fetch(guild.vodChannel);
+    if (!channel) {
+      continue;
+    }
+    let ping = null;
+    if (guild.vodPing) {
+      if (guild.vodPing === 'everyone') {
+        ping = '@everyone';
+      } else {
+        ping = `<@&${guild.vodPing}>`;
+      }
+    }
+    await channel.send({
+      content: ping,
+      embeds: [await createVodEmbed(vod)]
+    });
+  }
 }
 
 module.exports = {

@@ -3,6 +3,7 @@ const {
   handleStreamUpdate,
   handleStreamOffline
 } = require('../discord/handlers');
+const { getLatestVod } = require('./twitch');
 
 async function streamLiveCallback(event) {
   // https://twurple.js.org/reference/eventsub/classes/EventSubStreamOnlineEvent.html
@@ -13,7 +14,8 @@ async function streamLiveCallback(event) {
 async function streamOfflineCallback(event) {
   // https://twurple.js.org/reference/eventsub/classes/EventSubStreamOfflineEvent.html
   console.log(`[TWITCH] ${event.broadcasterDisplayName} has went offline`);
-  handleStreamOffline(event);
+  const vod = await getLatestVod(event.broadcasterId);
+  handleStreamOffline(event, vod);
 }
 
 async function streamUpdateCallback(event) {
