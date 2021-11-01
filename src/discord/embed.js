@@ -14,7 +14,7 @@ async function createLiveEmbed(liveEvent) {
   const stream = await liveEvent.getStream();
   return new MessageEmbed()
     .setTitle(liveEvent.broadcasterDisplayName)
-    .addField('Title', stream.title, true)
+    .addField('Title', stream.title, false)
     .addField('Game', stream.gameName, true)
     .setURL(`https://twitch.tv/${liveEvent.broadcasterName}`)
     .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '360'))
@@ -41,7 +41,7 @@ async function createUpdateEmbed(updateEvent) {
   const stream = await broadcaster.getStream();
   return new MessageEmbed()
     .setTitle(updateEvent.broadcasterDisplayName)
-    .addField('Title', updateEvent.streamTitle, true)
+    .addField('Title', updateEvent.streamTitle, false)
     .addField('Game', stream.gameName, true)
     .setURL(`https://twitch.tv/${updateEvent.broadcasterName}`)
     .setImage(stream.thumbnailUrl.replace('{width}', '640').replace('{height}', '360'))

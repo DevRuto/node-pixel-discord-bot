@@ -13,6 +13,11 @@ async function handleStreamLive(e) {
     return;
   }
 
+  // Delete any existing stream messages, simulate offline event
+  await handleStreamOffline({
+    broadcasterId: e.broadcasterId
+  });
+
   const guilds = await twitchUser.getGuilds();
   for (const guild of guilds) {
     if (!guild || !guild.streamChannel) {
