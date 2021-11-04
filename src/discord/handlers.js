@@ -89,10 +89,14 @@ async function handleStreamOffline(e, vod) {
   });
 
   for (const msg of messages) {
-    const channel = await client.channels.fetch(msg.discordChannel);
-    const message = await channel.messages.fetch(msg.message);
-    if (message && !message.deleted) {
-      await message.delete();
+    try {
+      const channel = await client.channels.fetch(msg.discordChannel);
+      const message = await channel.messages.fetch(msg.message);
+      if (message && !message.deleted) {
+        await message.delete();
+      }
+    } catch{
+      console.log('Unable to delete message');
     }
   }
 
